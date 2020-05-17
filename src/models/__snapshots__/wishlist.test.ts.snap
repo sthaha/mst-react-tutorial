@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`can add items to wishlist 1`] = `
+Object {
+  "items": Array [
+    Object {
+      "name": "foobar",
+      "price": 1.56,
+      "url": "",
+    },
+  ],
+}
+`;
+
+exports[`can store patches of changes to wishlist 1`] = `
+Object {
+  "items": Array [
+    Object {
+      "name": "something",
+      "price": 1.56,
+      "url": "",
+    },
+  ],
+}
+`;
+
+exports[`can store patches of changes to wishlist 2`] = `
+Array [
+  Object {
+    "op": "add",
+    "path": "/items/0",
+    "value": Object {
+      "name": "something",
+      "price": 1.56,
+      "url": "",
+    },
+  },
+]
+`;
