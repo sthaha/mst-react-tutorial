@@ -92,4 +92,19 @@ it ("can store patches of changes to wishlist", () => {
   expect(patches).toMatchSnapshot()
 })
 
+it("can calculate total price", () => {
+  const list = WishList.create();
+  expect(list.totalPrice).toBe(0);
+  list.add({
+    name: 'foobar',
+    price: 1.23
+  })
+  expect(list.totalPrice).toBe(1.23);
+
+  list.add({
+    name: 'another one',
+    price: 2.36,
+  })
+  expect(list.totalPrice).toBe(3.59);
+})
 

@@ -1,4 +1,4 @@
-import {types} from 'mobx-state-tree';
+import {types, Instance} from 'mobx-state-tree';
 
 export const WishListItem = types
   .model({
@@ -13,20 +13,22 @@ export const WishListItem = types
   })
 
 
-
+interface IWishListItem extends Instance<typeof WishListItem> {}
 
   export const WishList = types
     .model({
       items: types.optional(types.array(WishListItem), [])
     })
     .actions(self => ({
-      add(item){
+      add(item: IWishListItem){
         self.items.push(item)
       },
     }))
     .views(self => ({
-      get totalPrice(){
-        return self.items.reduce((sum, x) => sum + x, 0)
+      get totalPrice() {
+        return self.items.reduce((sum, item) => sum + item.price, 0)
       }
     }))
 
+
+export  interface IWishList extends Instance<typeof WishList> {}
