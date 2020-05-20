@@ -1,9 +1,9 @@
 import {getSnapshot, onSnapshot, onPatch} from 'mobx-state-tree';
-import {WishList, WishListItem } from './wishlist';
+import {Wishlist, WishlistItem } from './wishlist';
 
 
 it("can create an item", () => {
-  const item = WishListItem.create({
+  const item = WishlistItem.create({
     name: 'test',
     price: 12.5,
   })
@@ -14,7 +14,7 @@ it("can create an item", () => {
 })
 
 it("can rename an items", () => {
-  const item = WishListItem.create({
+  const item = WishlistItem.create({
     name: 'test',
     price: 12.5,
   })
@@ -25,33 +25,33 @@ it("can rename an items", () => {
 })
 
 
-it ("can create empty wishlist", () => {
-  const list = WishList.create({})
+it ("can create empty Wishlist", () => {
+  const list = Wishlist.create({})
   expect(list.items.length).toBe(0)
 
 })
 
 
-it("can create a wishlist", () => {
+it("can create a Wishlist", () => {
 
-  const item1 = WishListItem.create({
+  const item1 = WishlistItem.create({
     name: 'test 1',
     price: 12.5,
   })
 
-  const item2 = WishListItem.create({
+  const item2 = WishlistItem.create({
     name: 'test 2',
     price: 12.5,
   })
 
-  const list = WishList.create({
+  const list = Wishlist.create({
     items: [item1, item2]
   })
 })
 
 
-it ("can add items to wishlist", () => {
-  const list = WishList.create({})
+it ("can add items to Wishlist", () => {
+  const list = Wishlist.create({})
   list.add({
     name: "something",
     price: 1.56
@@ -70,8 +70,8 @@ it ("can add items to wishlist", () => {
 })
 
 
-it ("can store patches of changes to wishlist", () => {
-  const list = WishList.create({})
+it ("can store patches of changes to Wishlist", () => {
+  const list = Wishlist.create({})
 
   const states = []
   onSnapshot(list, s => states.push(s))
@@ -88,12 +88,14 @@ it ("can store patches of changes to wishlist", () => {
   expect(first.name).toBe("something")
   expect(first.price).toBe(1.56)
 
+  first.changeName("foobar")
+
   expect(getSnapshot(list)).toMatchSnapshot()
   expect(patches).toMatchSnapshot()
 })
 
 it("can calculate total price", () => {
-  const list = WishList.create();
+  const list = Wishlist.create();
   expect(list.totalPrice).toBe(0);
   list.add({
     name: 'foobar',

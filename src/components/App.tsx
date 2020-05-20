@@ -1,24 +1,16 @@
 import React from 'react';
 import './App.css';
-import {WishlistView} from './Wishlist';
-import {WishList} from '../models/wishlist';
+import {WishlistView} from './Wishlist'
 
+interface IApp { }
 
-function App() {
-  const list = WishList.create({
-    items: [
-      {
-        name: 'foobar',
-        price: 1.23,
-      }
-    ]
-  })
+const App: React.FC<IApp> = (props) => {
 
   return (
     <div className="App">
-      <WishlistView wishlist={list} />
+      <WishlistView />
     </div>
   );
 }
 
-export default App;
+export default App

@@ -1,6 +1,7 @@
 import {types, Instance} from 'mobx-state-tree';
 
-export const WishListItem = types
+
+export const WishlistItem = types
   .model({
     name: types.string,
     price: types.number,
@@ -9,26 +10,42 @@ export const WishListItem = types
   .actions( self => {
     const changeName = (name: string) => {self.name = name}
 
-    return {changeName}
+    return {
+      changeName,
+      changePrice(x: number){
+        self.price = x
+      }
+    }
   })
 
 
-interface IWishListItem extends Instance<typeof WishListItem> {}
+  type FilterFn = (x: IWishlistItem) => boolean
 
-  export const WishList = types
+
+  export const Wishlist = types
     .model({
-      items: types.optional(types.array(WishListItem), [])
+      items: types.optional(types.array(WishlistItem), [])
     })
     .actions(self => ({
-      add(item: IWishListItem){
+      add(item: IWishlistItem){
         self.items.push(item)
+      },
+    }))
+    .actions(self => ({
+      fetch() {
+        //setTimeout(() => { self.add({name: 'foobar', price: Math.random() * 100}) }, 1000)
       },
     }))
     .views(self => ({
       get totalPrice() {
         return self.items.reduce((sum, item) => sum + item.price, 0)
+      },
+      filter(fn: FilterFn) {
+        return self.items.filter(x => fn(x))
       }
     }))
 
 
-export  interface IWishList extends Instance<typeof WishList> {}
+export interface IWishlistItem extends Instance<typeof WishlistItem> {}
+export interface IWishlist extends Instance<typeof Wishlist> {}
+

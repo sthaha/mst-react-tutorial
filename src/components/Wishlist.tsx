@@ -1,6 +1,7 @@
 import React from 'react';
-import {IWishList} from '../models/wishlist';
 
+import {IWishlistItem} from '../models/wishlist';
+import {useWishlist} from '../models/store';
 
 interface IWishlistEntry {
   name: string
@@ -8,32 +9,31 @@ interface IWishlistEntry {
   url?: string
 }
 
-export const WishlistEntry: React.FC<IWishlistEntry> = (props) => {
+export const WishlistItem: React.FC<IWishlistEntry> = (props) => {
   const {name, url, price} = props
   return (
-    <li>
+    <li className="item">
       <h3> {name}</h3>
-      <p> {price}</p>
       { url &&  <img src={url} alt={name} /> }
+      <span> {price}</span>
     </li>
   )
 }
 
-interface IWishlistView {
-  wishlist: IWishList
+
+export interface IWishlistView {
+  //wishlist: IWishlist
 }
 
 
-
 export const WishlistView: React.FC<IWishlistView> = (props) => {
-  const {wishlist} = props;
-
+  const wishlist = useWishlist()
   return (
     <div>
       <ul>
-        { wishlist.items.map( (item, idx) => <WishlistEntry key={idx} {...item} />) }
+        { wishlist.items.map((item: IWishlistItem, idx: number) => <WishlistItem key={idx} {...item} />) }
       </ul>
-      <p> Total: {wishlist.totalPrice} </p>
+      <span> Total: {wishlist.totalPrice} </span>
     </div>
   )
 }
